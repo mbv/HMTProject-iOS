@@ -13,9 +13,16 @@
 		787D63351F33B73500C8F59C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 787D63331F33B73500C8F59C /* Main.storyboard */; };
 		787D63371F33B73500C8F59C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 787D63361F33B73500C8F59C /* Assets.xcassets */; };
 		787D633A1F33B73500C8F59C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 787D63381F33B73500C8F59C /* LaunchScreen.storyboard */; };
+		78A19B0C1F36072300974F0A /* ScoreboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A19B0B1F36072300974F0A /* ScoreboardTableViewCell.swift */; };
+		78A19B101F3637A700974F0A /* ScoreboardTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A19B0F1F3637A700974F0A /* ScoreboardTableHeader.swift */; };
+		78A19B121F3637E100974F0A /* ScoreboardTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */; };
+		78D136071F35BD6A002E6FC2 /* Stops.json in Resources */ = {isa = PBXBuildFile; fileRef = 78D136061F35BD6A002E6FC2 /* Stops.json */; };
+		9921EBC4C8003AF72C067CFE /* Pods_HMTProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		202EE2BF9836FAEF544AC4BA /* Pods-HMTProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.debug.xcconfig"; sourceTree = "<group>"; };
+		408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HMTProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		787D632A1F33B73500C8F59C /* HMTProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HMTProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		787D632D1F33B73500C8F59C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		787D632F1F33B73500C8F59C /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +31,11 @@
 		787D63361F33B73500C8F59C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		787D63391F33B73500C8F59C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		787D633B1F33B73500C8F59C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78A19B0B1F36072300974F0A /* ScoreboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreboardTableViewCell.swift; sourceTree = "<group>"; };
+		78A19B0F1F3637A700974F0A /* ScoreboardTableHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreboardTableHeader.swift; sourceTree = "<group>"; };
+		78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreboardTableHeader.xib; sourceTree = "<group>"; };
+		78D136061F35BD6A002E6FC2 /* Stops.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Stops.json; path = HMTProject/Stops.json; sourceTree = "<group>"; };
+		9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +43,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9921EBC4C8003AF72C067CFE /* Pods_HMTProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01D287291147E501905B604B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				202EE2BF9836FAEF544AC4BA /* Pods-HMTProject.debug.xcconfig */,
+				9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		787D63211F33B73500C8F59C = {
 			isa = PBXGroup;
 			children = (
+				78D136061F35BD6A002E6FC2 /* Stops.json */,
 				787D632C1F33B73500C8F59C /* HMTProject */,
 				787D632B1F33B73500C8F59C /* Products */,
+				01D287291147E501905B604B /* Pods */,
+				9F190B16A886C089E32C8A65 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +88,19 @@
 				787D63361F33B73500C8F59C /* Assets.xcassets */,
 				787D63381F33B73500C8F59C /* LaunchScreen.storyboard */,
 				787D633B1F33B73500C8F59C /* Info.plist */,
+				78A19B0B1F36072300974F0A /* ScoreboardTableViewCell.swift */,
+				78A19B0F1F3637A700974F0A /* ScoreboardTableHeader.swift */,
+				78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */,
 			);
 			path = HMTProject;
+			sourceTree = "<group>";
+		};
+		9F190B16A886C089E32C8A65 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 787D633E1F33B73500C8F59C /* Build configuration list for PBXNativeTarget "HMTProject" */;
 			buildPhases = (
+				F964B10EF70A25B433827B8B /* [CP] Check Pods Manifest.lock */,
 				787D63261F33B73500C8F59C /* Sources */,
 				787D63271F33B73500C8F59C /* Frameworks */,
 				787D63281F33B73500C8F59C /* Resources */,
+				86F18C089715B84882D4EEA5 /* [CP] Embed Pods Frameworks */,
+				8B47E635A1D253FF32FD95AE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,10 +169,60 @@
 				787D633A1F33B73500C8F59C /* LaunchScreen.storyboard in Resources */,
 				787D63371F33B73500C8F59C /* Assets.xcassets in Resources */,
 				787D63351F33B73500C8F59C /* Main.storyboard in Resources */,
+				78A19B121F3637E100974F0A /* ScoreboardTableHeader.xib in Resources */,
+				78D136071F35BD6A002E6FC2 /* Stops.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		86F18C089715B84882D4EEA5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8B47E635A1D253FF32FD95AE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F964B10EF70A25B433827B8B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		787D63261F33B73500C8F59C /* Sources */ = {
@@ -141,8 +230,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				787D63321F33B73500C8F59C /* SecondViewController.swift in Sources */,
+				78A19B101F3637A700974F0A /* ScoreboardTableHeader.swift in Sources */,
 				787D632E1F33B73500C8F59C /* AppDelegate.swift in Sources */,
 				787D63301F33B73500C8F59C /* FirstViewController.swift in Sources */,
+				78A19B0C1F36072300974F0A /* ScoreboardTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +354,7 @@
 		};
 		787D633F1F33B73500C8F59C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 202EE2BF9836FAEF544AC4BA /* Pods-HMTProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9696VR6W2P;
@@ -276,6 +368,7 @@
 		};
 		787D63401F33B73500C8F59C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9696VR6W2P;
@@ -306,6 +399,7 @@
 				787D63401F33B73500C8F59C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
