@@ -1,0 +1,25 @@
+PODS:
+  - GoogleMaps (2.4.0):
+    - GoogleMaps/Maps (= 2.4.0)
+  - GoogleMaps/Base (2.4.0)
+  - GoogleMaps/Maps (2.4.0):
+    - GoogleMaps/Base
+  - Socket.IO-Client-Swift (11.0.0):
+    - StarscreamSocketIO (~> 8.0.1)
+  - StarscreamSocketIO (8.0.1)
+  - SwiftyJSON (3.1.4)
+
+DEPENDENCIES:
+  - GoogleMaps (~> 2.4.0)
+  - Socket.IO-Client-Swift (~> 11.0.0)
+  - SwiftyJSON
+
+SPEC CHECKSUMS:
+  GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
+  Socket.IO-Client-Swift: 9cafa4459be23886c231942baeebb0df94f3989e
+  StarscreamSocketIO: 821a1a2597cc4735919fd5d7683a85c14b81bb8c
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+
+PODFILE CHECKSUM: 73c8b884ef2481c4ddab590d4a4471bb68912e98
+
+COCOAPODS: 1.2.0

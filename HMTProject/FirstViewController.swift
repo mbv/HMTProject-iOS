@@ -26,6 +26,8 @@ class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManag
         var longitude: Double?
         var latitude: Double?
         var marker: GMSMarker?
+        var title: String?
+        var number: Int?
     }
 
     struct StopRoute {
@@ -66,8 +68,6 @@ class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManag
         ScoreboardTableView.dataSource = self
         self.automaticallyAdjustsScrollViewInsets = false
 
-        // Create a GMSCameraPosition that tells the map to display the
-        // coordinate -33.86,151.20 at zoom level 6.
         let camera = GMSCameraPosition.camera(withLatitude: 53.93146, longitude: 27.48005, zoom: 10.0)
 
 
@@ -81,32 +81,10 @@ class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManag
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
 
-        // myMapView = mapView
         let mapView = myMapView!
-        // Creates a marker in the center of the map.
-//        let marker = GMSMarker()
-//        marker.position = CLLocationCoordinate2D(latitude: 53.93146, longitude: 27.48005)
-//        marker.title = "Minsk"
-//        marker.snippet = "Belarus"
-//        marker.map = mapView
 
-//        let position = CLLocationCoordinate2D(latitude: 53.93146, longitude: 27.48005)
-//        let london = GMSMarker(position: position)
-//        london.title = "London"
-//        london.icon = UIImage(named: "stop")
-//        london.isFlat = true
-//        london.map = mapView
-//        
-//        let circleCenter = CLLocationCoordinate2D(latitude: 53.93146, longitude: 27.48105)
-//        let circ = GMSCircle(position: circleCenter, radius: 1000)
-//        
-//        circ.fillColor = UIColor(red: 0.35, green: 0.0, blue: 0.0, alpha: 0.05)
-//        circ.strokeColor = .red
-//        circ.strokeWidth = 5
-//        circ.map = mapView
 
         let icon = UIImage(named: "stop")
-        // let icon = resizeImage(image: largeIcon!, targetSize: CGSize(width:30, height: 30))
 
         let region: GMSVisibleRegion = mapView.projection.visibleRegion()
         let bounds: GMSCoordinateBounds = GMSCoordinateBounds(region: region)
@@ -169,8 +147,7 @@ class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManag
             if let rawStringData = data[0] as? String {
                 self.scoreboard?.Routes?.removeAll()
                 let json = JSON(data: rawStringData.data(using: String.Encoding.utf8)!)
-                //print("-----------\n")
-                // print(data[0])
+
                 self.scoreboard?.StopId = json["StopId"].int
                 self.scoreboard?.Time = json["Time"].int
 
@@ -197,6 +174,52 @@ class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManag
                 self.ScoreboardTableView.reloadData()
             }
 
+        }
+
+        socket?.on("sendV") { data, ack in
+            if let rawStringData = data[0] as? String {
+                
+                let json = JSON(data: rawStringData.data(using: String.Encoding.utf8)!)
+
+
+                var icons: [UIImage] = [UIImage]()
+
+                icons.append(UIImage(named: "bus_1")!)
+                icons.append(UIImage(named: "bus_2")!)
+                icons.append(UIImage(named: "bus_3")!)
+                icons.append(UIImage(named: "bus_4")!)
+                icons.append(UIImage(named: "bus_5")!)
+
+                for (_, subJson): (String, JSON) in json["Vehicles"] {
+                    let vehicleId = subJson["Id"].int!
+                    if let vehicle = self.vehicles[vehicleId] {
+                        vehicle.marker?.position.latitude = subJson["Latitude"].double!
+                        vehicle.marker?.position.longitude = subJson["Longitude"].double!
+                    } else {
+                    var tmp = Vehicle()
+                    tmp.id = subJson["Id"].int
+                    tmp.latitude = subJson["Latitude"].double
+                    tmp.longitude = subJson["Longitude"].double
+                    tmp.title = subJson["Title"].string
+                        tmp.number = subJson["Number"].int
+
+
+                    let position = CLLocationCoordinate2D(latitude: tmp.latitude!, longitude: tmp.longitude!)
+                    let tmpGMSMarker = GMSMarker(position: position)
+                    tmpGMSMarker.title = tmp.title
+                    tmpGMSMarker.icon = icons[tmp.number! - 1]
+                    tmpGMSMarker.groundAnchor = CGPoint(x: 0.5, y: 1)
+                    tmpGMSMarker.appearAnimation = GMSMarkerAnimation.pop;
+
+                    tmpGMSMarker.map = self.myMapView
+
+                    tmp.marker = tmpGMSMarker;
+
+                    self.vehicles[tmp.id!] = tmp
+                    self.vehiclesMapToId[tmpGMSMarker] = tmp.id
+                    }
+                }
+            }
         }
 
         socket?.connect()
@@ -243,13 +266,22 @@ class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManag
         if let markerId = markerMapToStopId[marker] {
             let json = JSON(["type": "stop", "id": markerId])
             self.scoreboard?.Routes?.removeAll()
-//        let title = markers[markerId]!.title!
-//        print(title)
+            removeVehicles()
+
             if let data = json.rawString() {
                 socket?.emit("get", data)
             }
+        } else if self.vehiclesMapToId[marker] != nil {
+            return false
         }
         return false
+    }
+    
+    func removeVehicles() {
+        for (_, vehicle) in self.vehicles {
+            vehicle.marker?.map = nil
+        }
+        self.vehicles.removeAll()
     }
 
 
