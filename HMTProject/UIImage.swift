@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Foundation
 
 extension UIImage {
     
-    func addText(_ drawText: NSString, atPoint: CGPoint, textColor: UIColor?, textFont: UIFont?) -> UIImage {
+    func addText(_ drawText: NSString, atPoint: CGPoint, textColor: UIColor?, textFont: UIFont?, centerX: Bool) -> UIImage {
         
         // Setup the font specific variables
         var _textColor: UIColor
@@ -28,7 +29,7 @@ extension UIImage {
         }
         
         // Setup the image context using the passed image
-        UIGraphicsBeginImageContext(size)
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
         
         // Setup the font attributes that will be later used to dictate how the text should be drawn
         let textFontAttributes = [
@@ -39,11 +40,21 @@ extension UIImage {
         // Put the image into a rectangle as large as the original image
         draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         
+        var x = atPoint.x
+        
+        let y = atPoint.y * UIScreen.main.scale
+        
+        if (centerX) {
+        let boundingBox = drawText.boundingRect(with: CGSize(width: .greatestFiniteMagnitude, height: size.height / 3.0), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil)
+        
+            x = (size.width - boundingBox.width)/2.0
+        }
         // Create a point within the space that is as bit as the image
-        let rect = CGRect(x: atPoint.x, y: atPoint.y, width: size.width, height: size.height)
+        let rect = CGRect(x: x, y: y, width: size.width, height: size.height)
         
         // Draw the text into an image
         drawText.draw(in: rect, withAttributes: textFontAttributes)
+        
         
         // Create a new image out of the images we have created
         let newImage = UIGraphicsGetImageFromCurrentImageContext()

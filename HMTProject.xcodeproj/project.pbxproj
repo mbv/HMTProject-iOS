@@ -17,7 +17,7 @@
 		78A19B101F3637A700974F0A /* ScoreboardTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A19B0F1F3637A700974F0A /* ScoreboardTableHeader.swift */; };
 		78A19B121F3637E100974F0A /* ScoreboardTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */; };
 		78D136071F35BD6A002E6FC2 /* Stops.json in Resources */ = {isa = PBXBuildFile; fileRef = 78D136061F35BD6A002E6FC2 /* Stops.json */; };
-		78E2ADA01F3BA28700884CB3 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E2AD9F1F3BA28700884CB3 /* UIImage.swift */; };
+		78E32E531F3E3A9F00AFDDBB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E32E521F3E3A9F00AFDDBB /* UIImage.swift */; };
 		9921EBC4C8003AF72C067CFE /* Pods_HMTProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +36,7 @@
 		78A19B0F1F3637A700974F0A /* ScoreboardTableHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreboardTableHeader.swift; sourceTree = "<group>"; };
 		78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreboardTableHeader.xib; sourceTree = "<group>"; };
 		78D136061F35BD6A002E6FC2 /* Stops.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Stops.json; path = HMTProject/Stops.json; sourceTree = "<group>"; };
-		78E2AD9F1F3BA28700884CB3 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		78E32E521F3E3A9F00AFDDBB /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,7 +93,7 @@
 				78A19B0B1F36072300974F0A /* ScoreboardTableViewCell.swift */,
 				78A19B0F1F3637A700974F0A /* ScoreboardTableHeader.swift */,
 				78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */,
-				78E2AD9F1F3BA28700884CB3 /* UIImage.swift */,
+				78E32E521F3E3A9F00AFDDBB /* UIImage.swift */,
 			);
 			path = HMTProject;
 			sourceTree = "<group>";
@@ -235,7 +235,7 @@
 				787D63321F33B73500C8F59C /* SecondViewController.swift in Sources */,
 				78A19B101F3637A700974F0A /* ScoreboardTableHeader.swift in Sources */,
 				787D632E1F33B73500C8F59C /* AppDelegate.swift in Sources */,
-				78E2ADA01F3BA28700884CB3 /* UIImage.swift in Sources */,
+				78E32E531F3E3A9F00AFDDBB /* UIImage.swift in Sources */,
 				787D63301F33B73500C8F59C /* FirstViewController.swift in Sources */,
 				78A19B0C1F36072300974F0A /* ScoreboardTableViewCell.swift in Sources */,
 			);
@@ -361,6 +361,7 @@
 			baseConfigurationReference = 202EE2BF9836FAEF544AC4BA /* Pods-HMTProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9696VR6W2P;
 				INFOPLIST_FILE = HMTProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -375,6 +376,7 @@
 			baseConfigurationReference = 9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9696VR6W2P;
 				INFOPLIST_FILE = HMTProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
