@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		787D632E1F33B73500C8F59C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D632D1F33B73500C8F59C /* AppDelegate.swift */; };
-		787D63301F33B73500C8F59C /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D632F1F33B73500C8F59C /* FirstViewController.swift */; };
+		787D63301F33B73500C8F59C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D632F1F33B73500C8F59C /* MapViewController.swift */; };
 		787D63321F33B73500C8F59C /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D63311F33B73500C8F59C /* SecondViewController.swift */; };
 		787D63351F33B73500C8F59C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 787D63331F33B73500C8F59C /* Main.storyboard */; };
 		787D63371F33B73500C8F59C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 787D63361F33B73500C8F59C /* Assets.xcassets */; };
@@ -26,7 +26,7 @@
 		408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HMTProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		787D632A1F33B73500C8F59C /* HMTProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HMTProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		787D632D1F33B73500C8F59C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		787D632F1F33B73500C8F59C /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		787D632F1F33B73500C8F59C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		787D63311F33B73500C8F59C /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		787D63341F33B73500C8F59C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		787D63361F33B73500C8F59C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				787D632D1F33B73500C8F59C /* AppDelegate.swift */,
-				787D632F1F33B73500C8F59C /* FirstViewController.swift */,
+				787D632F1F33B73500C8F59C /* MapViewController.swift */,
 				787D63311F33B73500C8F59C /* SecondViewController.swift */,
 				787D63331F33B73500C8F59C /* Main.storyboard */,
 				787D63361F33B73500C8F59C /* Assets.xcassets */,
@@ -236,7 +236,7 @@
 				78A19B101F3637A700974F0A /* ScoreboardTableHeader.swift in Sources */,
 				787D632E1F33B73500C8F59C /* AppDelegate.swift in Sources */,
 				78E32E531F3E3A9F00AFDDBB /* UIImage.swift in Sources */,
-				787D63301F33B73500C8F59C /* FirstViewController.swift in Sources */,
+				787D63301F33B73500C8F59C /* MapViewController.swift in Sources */,
 				78A19B0C1F36072300974F0A /* ScoreboardTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

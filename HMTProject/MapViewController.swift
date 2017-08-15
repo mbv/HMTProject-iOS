@@ -11,7 +11,7 @@ import GoogleMaps
 import SwiftyJSON
 import SocketIO
 
-class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     struct Marker {
         var id: Int?
@@ -319,6 +319,7 @@ class FirstViewController: UIViewController, GMSMapViewDelegate, CLLocationManag
                         marker.marker?.rotation = CLLocationDegrees(marker.bearing!)
                     }
                 }
+                self.scoreboard?.Routes?.removeAll()
                 selectedMarker = markerId
                 markers[markerId]?.marker?.icon = iconStopSelected
                 markers[markerId]?.marker?.rotation = 0
