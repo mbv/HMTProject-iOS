@@ -27,9 +27,10 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         var longitude: Double?
         var latitude: Double?
         var marker: GMSMarker?
-        var title: String?
+        var number: String?
         var vehicleType: Int?
         var tripType: Int?
+        var routeId: Int?
     }
 
     struct StopRoute {
@@ -76,6 +77,10 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 
     var socket: SocketIOClient?
     var clientId: Int = 0
+    
+    var routeTrackA: GMSPolyline?
+    var routeTrackB: GMSPolyline?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,7 +179,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 
                 for (_, subJson): (String, JSON) in json["Records"] {
                     var tmp = StopRoute()
-                    //tmp.Id = subJson["Id"].int
+                    tmp.Id = subJson["Id"].int
                     tmp.VehicleType = subJson["Type"].string
                     tmp.Number = subJson["Number"].string
                     tmp.EndStop = subJson["EndStop"].string
@@ -217,9 +222,10 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                     tmp.id = subJson["Id"].int
                     tmp.latitude = subJson["Latitude"].double
                     tmp.longitude = subJson["Longitude"].double
-                    tmp.title = subJson["Title"].string
+                    tmp.number = subJson["Title"].string
                     tmp.vehicleType = subJson["VehicleType"].int
                     tmp.tripType = subJson["TripType"].int
+                    tmp.routeId = subJson["RouteId"].int
 
 
                     let position = CLLocationCoordinate2D(latitude: tmp.latitude!, longitude: tmp.longitude!)
@@ -251,7 +257,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                         }
                         
                         
-                    icon = icon.addText((tmp.title!) as NSString, atPoint: CGPoint(x:0,y:8), textColor: UIColor.white, textFont: UIFont.boldSystemFont(ofSize: 16), centerX: true)
+                    icon = icon.addText((tmp.number!) as NSString, atPoint: CGPoint(x:0,y:8), textColor: UIColor.white, textFont: UIFont.boldSystemFont(ofSize: 16), centerX: true)
                     tmpGMSMarker.icon = icon
                     tmpGMSMarker.groundAnchor = CGPoint(x: 0.5, y: 1)
                     tmpGMSMarker.appearAnimation = GMSMarkerAnimation.pop;
@@ -264,6 +270,57 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                     self.vehiclesMapToId[tmpGMSMarker] = tmp.id
                     }
                 }
+            }
+        }
+        
+        socket?.on("sendR") { data, ack in
+            if let rawStringData = data[0] as? String {
+                
+                let json = JSON(data: rawStringData.data(using: String.Encoding.utf8)!)
+                
+                let vehicleType = json["VehicleType"].int
+                
+                let pathAColors = [
+                    UIColor(red: 0.12, green: 0.48, blue: 0.96, alpha: 0.7),
+                    UIColor(red: 0.13, green: 0.96, blue: 0.36, alpha: 0.7),
+                    UIColor(red: 0.60, green: 0.13, blue: 0.96, alpha: 0.7)
+                ]
+                
+                
+                let pathBColors = [
+                    UIColor(red: 0.96, green: 0.29, blue: 0.12, alpha: 0.7),
+                    UIColor(red: 0.96, green: 0.84, blue: 0.13, alpha: 0.7),
+                    UIColor(red: 0.92, green: 0.53, blue: 0.27, alpha: 0.7)
+                ]
+
+                self.routeTrackA?.map = nil
+                self.routeTrackB?.map = nil
+                
+                var path = GMSMutablePath()
+                
+                for (_, subJson): (String, JSON) in json["Track"]["PointsA"] {
+                    path.add(CLLocationCoordinate2D(latitude: subJson["Latitude"].double!, longitude: subJson["Longitude"].double!))
+                }
+                
+                self.routeTrackA = GMSPolyline(path: path)
+                
+                self.routeTrackA?.map = self.myMapView
+                self.routeTrackA?.strokeWidth = 5
+                
+                self.routeTrackA?.strokeColor = pathAColors[vehicleType!]
+                
+                path = GMSMutablePath()
+                
+                for (_, subJson): (String, JSON) in json["Track"]["PointsB"] {
+                    path.add(CLLocationCoordinate2D(latitude: subJson["Latitude"].double!, longitude: subJson["Longitude"].double!))
+                }
+                
+                self.routeTrackB = GMSPolyline(path: path)
+                
+                self.routeTrackB?.map = self.myMapView
+                self.routeTrackB?.strokeWidth = 5
+                
+                self.routeTrackB?.strokeColor = pathBColors[vehicleType!]
             }
         }
 
@@ -299,6 +356,17 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let tmpScoreboard = self.scoreboard?.Routes?[indexPath.row]
+        
+        let json = JSON(["type": "route", "id": tmpScoreboard!.Id!])
+        removeVehicles()
+        
+        if let data = json.rawString() {
+            socket?.emit("get", data)
+        }
+    }
 
 
     override func didReceiveMemoryWarning() {
@@ -319,12 +387,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                         marker.marker?.rotation = CLLocationDegrees(marker.bearing!)
                     }
                 }
-                self.scoreboard?.Routes?.removeAll()
                 selectedMarker = markerId
                 markers[markerId]?.marker?.icon = iconStopSelected
                 markers[markerId]?.marker?.rotation = 0
                 let json = JSON(["type": "stop", "id": markerId])
                 self.scoreboard?.Routes?.removeAll()
+                self.ScoreboardTableView.reloadData()
                 removeVehicles()
 
                 if let data = json.rawString() {
@@ -342,6 +410,15 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
             vehicle.marker?.map = nil
         }
         self.vehicles.removeAll()
+    }
+    
+    func removeVehicles(without routeId: Int) {
+        for (_, vehicle) in self.vehicles {
+            if vehicle.routeId != routeId {
+                vehicle.marker?.map = nil
+                self.vehicles.removeValue(forKey: vehicle.routeId!)
+            }
+        }
     }
 
 
