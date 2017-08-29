@@ -19,6 +19,7 @@
 		78D136071F35BD6A002E6FC2 /* Stops.json in Resources */ = {isa = PBXBuildFile; fileRef = 78D136061F35BD6A002E6FC2 /* Stops.json */; };
 		78E32E531F3E3A9F00AFDDBB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E32E521F3E3A9F00AFDDBB /* UIImage.swift */; };
 		9921EBC4C8003AF72C067CFE /* Pods_HMTProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */; };
+		F4C2E1C71F5599AA0091C279 /* MTApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		78D136061F35BD6A002E6FC2 /* Stops.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Stops.json; path = HMTProject/Stops.json; sourceTree = "<group>"; };
 		78E32E521F3E3A9F00AFDDBB /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.release.xcconfig"; sourceTree = "<group>"; };
+		F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTApiHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				78A19B0F1F3637A700974F0A /* ScoreboardTableHeader.swift */,
 				78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */,
 				78E32E521F3E3A9F00AFDDBB /* UIImage.swift */,
+				F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */,
 			);
 			path = HMTProject;
 			sourceTree = "<group>";
@@ -186,9 +189,18 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/StarscreamSocketIO/StarscreamSocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StarscreamSocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -201,9 +213,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -216,13 +231,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HMTProject-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -234,6 +252,7 @@
 			files = (
 				787D63321F33B73500C8F59C /* SecondViewController.swift in Sources */,
 				78A19B101F3637A700974F0A /* ScoreboardTableHeader.swift in Sources */,
+				F4C2E1C71F5599AA0091C279 /* MTApiHelper.swift in Sources */,
 				787D632E1F33B73500C8F59C /* AppDelegate.swift in Sources */,
 				78E32E531F3E3A9F00AFDDBB /* UIImage.swift in Sources */,
 				787D63301F33B73500C8F59C /* MapViewController.swift in Sources */,
@@ -364,6 +383,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9696VR6W2P;
 				INFOPLIST_FILE = HMTProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mbv.HMTProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -379,6 +399,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9696VR6W2P;
 				INFOPLIST_FILE = HMTProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mbv.HMTProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -147,7 +147,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                 }
             }
         }
-        checkSocket()
+        //checkSocket()
         self.scoreboard = Scoreboard()
         self.scoreboard?.Routes = [StopRoute]()
 
@@ -257,7 +257,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                         }
                         
                         
-                    icon = icon.addText((tmp.number!) as NSString, atPoint: CGPoint(x:0,y:8), textColor: UIColor.white, textFont: UIFont.boldSystemFont(ofSize: 16), centerX: true)
+                    icon = icon.addText((tmp.number!) as NSString, atPoint: CGPoint(x:0,y:8.5), textColor: UIColor.white, textFont: UIFont.boldSystemFont(ofSize: 16), centerX: true)
                     tmpGMSMarker.icon = icon
                     tmpGMSMarker.groundAnchor = CGPoint(x: 0.5, y: 1)
                     tmpGMSMarker.appearAnimation = GMSMarkerAnimation.pop;
@@ -396,7 +396,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                 removeVehicles()
 
                 if let data = json.rawString() {
-                    socket?.emit("get", data)
+                    //socket?.emit("get", data)
+                    GetData()
                 }
             }
         } else if self.vehiclesMapToId[marker] != nil {
