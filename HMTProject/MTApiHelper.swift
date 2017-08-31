@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class MTApiHelper: initializerUser {
+class MTApiHelper: InitializerUser, OperationExecutor {
     private let USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.0147.211 Safari/537.36"
     private var sessionManager: SessionManager
     private var configurationSessionManager: URLSessionConfiguration
@@ -44,6 +44,10 @@ class MTApiHelper: initializerUser {
         for (key, value) in cookies {
             setCookie(cookieStorage: configurationSessionManager.httpCookieStorage, key: key, value: value)
         }
+    }
+
+    func execute(data: JSON) {
+
     }
 
     func GetData(url:String, parameters: Parameters) {
@@ -86,6 +90,10 @@ class MTApiHelper: initializerUser {
 }
 
 
-protocol initializerUser {
+protocol InitializerUser {
     func initUser(token: String, cookies: [String: String])
+}
+
+protocol OperationExecutor {
+    func execute(data: JSON)
 }

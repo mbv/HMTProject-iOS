@@ -18,6 +18,7 @@
 		78A19B121F3637E100974F0A /* ScoreboardTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */; };
 		78D136071F35BD6A002E6FC2 /* Stops.json in Resources */ = {isa = PBXBuildFile; fileRef = 78D136061F35BD6A002E6FC2 /* Stops.json */; };
 		78E32E531F3E3A9F00AFDDBB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E32E521F3E3A9F00AFDDBB /* UIImage.swift */; };
+		8BA87C4EB4CB28ABB49BD859 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */; };
 		8BA87C7DC243CECDC2D7150F /* ServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87503D6556DC87D134042 /* ServerCommunication.swift */; };
 		9921EBC4C8003AF72C067CFE /* Pods_HMTProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */; };
 		F4C2E1C71F5599AA0091C279 /* MTApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */; };
@@ -40,6 +41,7 @@
 		78D136061F35BD6A002E6FC2 /* Stops.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Stops.json; path = HMTProject/Stops.json; sourceTree = "<group>"; };
 		78E32E521F3E3A9F00AFDDBB /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		8BA87503D6556DC87D134042 /* ServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunication.swift; sourceTree = "<group>"; };
+		8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.release.xcconfig"; sourceTree = "<group>"; };
 		F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTApiHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				78E32E521F3E3A9F00AFDDBB /* UIImage.swift */,
 				F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */,
 				8BA87503D6556DC87D134042 /* ServerCommunication.swift */,
+				8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */,
 			);
 			path = HMTProject;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				787D63301F33B73500C8F59C /* MapViewController.swift in Sources */,
 				78A19B0C1F36072300974F0A /* ScoreboardTableViewCell.swift in Sources */,
 				8BA87C7DC243CECDC2D7150F /* ServerCommunication.swift in Sources */,
+				8BA87C4EB4CB28ABB49BD859 /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
