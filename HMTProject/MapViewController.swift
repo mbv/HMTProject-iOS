@@ -9,7 +9,6 @@
 import UIKit
 import GoogleMaps
 import SwiftyJSON
-import SocketIO
 
 class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
 
@@ -75,13 +74,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 
     var scoreboard: Scoreboard?
 
-    var socket: SocketIOClient?
     var clientId: Int = 0
 
     var routeTrackA: GMSPolyline?
     var routeTrackB: GMSPolyline?
 
     var apiHelper : MTApiHelper = MTApiHelper.init()
+    var serverCommunication : ServerCommunication = ServerCommunication.init()
 
 
     override func viewDidLoad() {
@@ -158,7 +157,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 ///https://hmt.mbv-soft.ru
     //ws://localhost:5000
     func checkSocket() {
-        socket = SocketIOClient(socketURL: URL(string: "https://hmt.mbv-soft.ru")!, config: [.log(true), .compress])
+        /*socket = SocketIOClient(socketURL: URL(string: "https://hmt.mbv-soft.ru")!, config: [.log(true), .compress])
 
         socket?.on(clientEvent: .connect) { data, ack in
             print("socket connected")
@@ -330,7 +329,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
             }
         }
 
-        socket?.connect()
+        socket?.connect()*/
     }
 
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -370,7 +369,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         removeVehicles()
 
         if let data = json.rawString() {
-            socket?.emit("get", data)
+            //socket?.emit("get", data)
         }
     }
 
@@ -396,22 +395,22 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                 selectedMarker = markerId
                 markers[markerId]?.marker?.icon = iconStopSelected
                 markers[markerId]?.marker?.rotation = 0
-                let json = JSON(["type": "stop", "id": markerId])
+                //let json = JSON(["type": "stop", "id": markerId])
                 self.scoreboard?.Routes?.removeAll()
                 self.ScoreboardTableView.reloadData()
                 removeVehicles()
 
-                if let data = json.rawString() {
+                    serverCommunication.getParams()
                     //socket?.emit("get", data)
-                    let param: [String: String] = [
+                    /*let param: [String: String] = [
                         "p": "minsk",
                         "tt": "bus",
                         "r": "100",
                         "v": "21",
                     ]
-                    apiHelper.initUser()
-                    apiHelper.GetData(url: "", parameters: param)
-                }
+                    apiHelper.initUser(token: "", cookies: [ : ])
+                    apiHelper.GetData(url: "", parameters: param)*/
+                
             }
         } else if self.vehiclesMapToId[marker] != nil {
             return false

@@ -5,7 +5,7 @@
 
 import Foundation
 import SwiftyJSON
-import SocketIO
+import Alamofire
 
 class ServerCommunication {
 
@@ -14,81 +14,84 @@ class ServerCommunication {
     private let COMMAND_UPDATED_USER_DATA = "updated_user_data"
     private let COMMAND_UPDATED_DATA = "updated_data"
     private let COMMAND_OPERATION_DATA = "operation_data"
+    
+    var apiHelper : MTApiHelper = MTApiHelper.init()
 
-    var socket: SocketIOClient
+
 
     var initializerUser: InitializerUser?
     var storage: Storage?
     var operationExecutor: OperationExecutor?
 
     init() {
-        socket = SocketIOClient(socketURL: URL(string: SERVER_URL)!, config: [.log(true), .compress])
+
     }
 
     func initialize() {
-        socket.on(clientEvent: .connect) { data, ack in
-            self.onConnected()
-        }
-
-        socket.on(COMMAND_UPDATED_USER_DATA) { data, ack in
-            self.onUpdatedUserData(data: parseResultToJson(data: data))
-        }
-
-        socket.on(COMMAND_UPDATED_DATA) { data, ack in
-            self.onUpdatedData(data: parseResultToJson(data: data))
-        }
-
-        socket.on(COMMAND_OPERATION_DATA) { data, ack in
-            self.onOperationData(data: parseResultToJson(data: data))
-        }
+        
     }
 
-    private func onConnected() {
-        let json = JSON([
+    func getParams() {
+        let params:Parameters = [
             "type": "iOS",
-            "id": UIDevice.current.identifierForVendor!.uuidString
-        ])
-
-        if let data = json.rawString() {
-            self.socket.emit("initClient", data)
+            "uid": UIDevice.current.identifierForVendor!.uuidString,
+            "requests": [
+                [
+                    "type": "Vehicle",
+                    "params": [
+                        "city": "minsk",
+                        "transportType": "bus",
+                        "route": "100"
+                    ]
+                ]
+            ]
+        ]
+        Alamofire.request("http://localhost:5000/request", method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    var cookies: [String:String] = [:]
+                    for (_,cookie):(String, JSON) in json["Cookies"] {
+                        cookies[cookie["Name"].string!] = cookie["Value"].string
+                    }
+                    self.apiHelper.initUser(cookies: cookies)
+                    for (_,request):(String, JSON) in json["Requests"] {
+                        self.apiHelper.GetData(url: request["Url"].string!, parameters: request["Params"].dictionaryObject!)
+                    }
+                case .failure(let error):
+                    print(response)
+                    print(error)
+                }
+                
         }
     }
 
     private func onUpdatedUserData(data: JSON?) {
-        if !data {
-            return
-        }
 
-        let token = data["Token"].String
-        var cookies: [String: String] = []
-        for (_, subJson): (String, JSON) in json["Cookies"] {
-            let key = subJson["Key"].String
-            let value = subJson["Value"].String
-            cookies[key] = value
-        }
 
-        initializerUser.initUser(token: token, cookies: cookies)
+        //let token = data?["Token"].String
+        //var cookies: [String: String] = [:]
+        //for (_, subJson): (String, JSON) in (data?["Cookies"])! {
+            //let key = subJson["Key"].String
+            //let value = subJson["Value"].String
+            //cookies[key] = value
+        //}
+
+        //initializerUser.initUser(token: token, cookies: cookies)
     }
 
     private func onUpdatedData(data: JSON?) {
-        if !data {
-            return
-        }
-        storage.update(data: data)
+
     }
 
-    func onOperationData(data: JSON?) {
-        if !data {
-            return
-        }
-        operationExecutor.execute(data: data)
-    }
 
     private func parseResultToJson(data: [Any]) -> JSON? {
-        if let rawStringData = data[0] as? String {
+        /*if let rawStringData = data[0] as? String {
             let json = JSON(data: rawStringData.data(using: String.Encoding.utf8)!)
 
             return json
-        }
+        }*/
+        return nil
     }
 }

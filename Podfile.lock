@@ -1,28 +1,22 @@
 PODS:
-  - Alamofire (4.5.0)
-  - GoogleMaps (2.4.0):
-    - GoogleMaps/Maps (= 2.4.0)
-  - GoogleMaps/Base (2.4.0)
-  - GoogleMaps/Maps (2.4.0):
+  - Alamofire (4.5.1)
+  - GoogleMaps (2.5.0):
+    - GoogleMaps/Maps (= 2.5.0)
+  - GoogleMaps/Base (2.5.0)
+  - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
-  - Socket.IO-Client-Swift (11.0.0):
-    - StarscreamSocketIO (~> 8.0.1)
-  - StarscreamSocketIO (8.0.1)
-  - SwiftyJSON (3.1.4)
+  - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
-  - GoogleMaps (~> 2.4.0)
-  - Socket.IO-Client-Swift (~> 11.0.0)
+  - GoogleMaps (~> 2.5.0)
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
-  Socket.IO-Client-Swift: 9cafa4459be23886c231942baeebb0df94f3989e
-  StarscreamSocketIO: 821a1a2597cc4735919fd5d7683a85c14b81bb8c
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 9a7ed63f1588542bf51039ffd9b4244b4d7d35e7
+PODFILE CHECKSUM: cdf555c53d608d16023fa7381c670ed0fbc0af4f
 
 COCOAPODS: 1.3.1

@@ -38,9 +38,7 @@ class MTApiHelper: InitializerUser, OperationExecutor {
         sessionManager = Alamofire.SessionManager(configuration: configurationSessionManager)
     }
 
-    func initUser(token: String, cookies: [String: String]) {
-        self.token = token
-
+    func initUser(cookies: [String: String]) {
         for (key, value) in cookies {
             setCookie(cookieStorage: configurationSessionManager.httpCookieStorage, key: key, value: value)
         }
@@ -51,9 +49,7 @@ class MTApiHelper: InitializerUser, OperationExecutor {
     }
 
     func GetData(url:String, parameters: Parameters) {
-        var localParameters = parameters
-
-        localParameters[PARAM_TOKEN] = token
+        let localParameters = parameters
 
         let headers: HTTPHeaders = [
             "Referer": URL_INDEX,
@@ -91,7 +87,7 @@ class MTApiHelper: InitializerUser, OperationExecutor {
 
 
 protocol InitializerUser {
-    func initUser(token: String, cookies: [String: String])
+    func initUser(cookies: [String: String])
 }
 
 protocol OperationExecutor {

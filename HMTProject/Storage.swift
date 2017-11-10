@@ -4,13 +4,14 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 protocol Storage {
-    func update(data: JSON)
+    //func update(data: JSON)
 }
 
 class SQLLiteStorage: Storage {
-    func update(data: JSON) {
+    //func update(data: JSON) {
 
-    }
+    //}
 }
