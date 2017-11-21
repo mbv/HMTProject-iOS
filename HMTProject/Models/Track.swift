@@ -7,7 +7,7 @@ import Foundation
 
 class Track {
     let id: Int64?
-    var routeID: Int64?
+    var routeId: Int64?
     var centerLatitude: Float64?
     var centerLongitude: Float64?
 

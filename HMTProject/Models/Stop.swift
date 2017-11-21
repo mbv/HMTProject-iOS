@@ -12,6 +12,9 @@ class Stop {
     var latitude: Float64?
     var longitude: Float64?
     var name: String?
+    var busType: Bool?
+    var trolleybusType: Bool?
+    var tramType: Bool?
 
 
     init(id: Int64) {

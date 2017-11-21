@@ -7,11 +7,11 @@ import Foundation
 
 class Trip {
     let id: Int64?
-    var routeID: Int64?
-    var EndStopA: String?
-    var EndStopB: String?
-    var NameA: String?
-    var NameB: String?
+    var routeId: Int64?
+    var endStopA: String?
+    var endStopB: String?
+    var nameA: String?
+    var nameB: String?
 
 
     init(id: Int64) {
