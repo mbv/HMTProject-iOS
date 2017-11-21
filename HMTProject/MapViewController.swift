@@ -92,6 +92,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 
         let camera = GMSCameraPosition.camera(withLatitude: 53.93146, longitude: 27.48005, zoom: 10.0)
 
+        MainDB.instance.hmm()
+
 
         self.myMapView.camera = camera
         self.myMapView.delegate = self

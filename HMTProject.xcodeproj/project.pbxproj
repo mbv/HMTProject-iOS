@@ -18,8 +18,15 @@
 		78A19B121F3637E100974F0A /* ScoreboardTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */; };
 		78D136071F35BD6A002E6FC2 /* Stops.json in Resources */ = {isa = PBXBuildFile; fileRef = 78D136061F35BD6A002E6FC2 /* Stops.json */; };
 		78E32E531F3E3A9F00AFDDBB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E32E521F3E3A9F00AFDDBB /* UIImage.swift */; };
+		8BA87187B3D9C43D330EE2E1 /* MainDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87020E0BC3B18D39ACE55 /* MainDB.swift */; };
+		8BA8771DF78A68CCE9F52EC6 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA873061FEEC113B96D5899 /* Stop.swift */; };
+		8BA878999CCD76744E38FE2A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA876FEDEE5F7F28EBDB158 /* Track.swift */; };
 		8BA87C4EB4CB28ABB49BD859 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */; };
 		8BA87C7DC243CECDC2D7150F /* ServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87503D6556DC87D134042 /* ServerCommunication.swift */; };
+		8BA87D952FF17597D5236D0E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87D4D8DA90BFBEFE44C54 /* Route.swift */; };
+		8BA87DB1E88CDD7712F9F43A /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87DFBB17E4BCF93B0788C /* Trip.swift */; };
+		8BA87E4BE14E59170C02AB39 /* StopTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA8777571DD330BA0846395 /* StopTrip.swift */; };
+		8BA87EB8276DB028334F52F9 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA875A802C6EBD9456940E7 /* Point.swift */; };
 		9921EBC4C8003AF72C067CFE /* Pods_HMTProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */; };
 		F4C2E1C71F5599AA0091C279 /* MTApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */; };
 /* End PBXBuildFile section */
@@ -40,8 +47,15 @@
 		78A19B111F3637E100974F0A /* ScoreboardTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreboardTableHeader.xib; sourceTree = "<group>"; };
 		78D136061F35BD6A002E6FC2 /* Stops.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Stops.json; path = HMTProject/Stops.json; sourceTree = "<group>"; };
 		78E32E521F3E3A9F00AFDDBB /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		8BA87020E0BC3B18D39ACE55 /* MainDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainDB.swift; sourceTree = "<group>"; };
+		8BA873061FEEC113B96D5899 /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		8BA87503D6556DC87D134042 /* ServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunication.swift; sourceTree = "<group>"; };
+		8BA875A802C6EBD9456940E7 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		8BA876FEDEE5F7F28EBDB158 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		8BA8777571DD330BA0846395 /* StopTrip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopTrip.swift; sourceTree = "<group>"; };
 		8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		8BA87D4D8DA90BFBEFE44C54 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		8BA87DFBB17E4BCF93B0788C /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.release.xcconfig"; sourceTree = "<group>"; };
 		F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTApiHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,8 +117,31 @@
 				F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */,
 				8BA87503D6556DC87D134042 /* ServerCommunication.swift */,
 				8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */,
+				8BA87CBA246F11AAE63589BE /* Models */,
+				8BA87560226A4DA01E352C2D /* Database */,
 			);
 			path = HMTProject;
+			sourceTree = "<group>";
+		};
+		8BA87560226A4DA01E352C2D /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				8BA87020E0BC3B18D39ACE55 /* MainDB.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		8BA87CBA246F11AAE63589BE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8BA87D4D8DA90BFBEFE44C54 /* Route.swift */,
+				8BA876FEDEE5F7F28EBDB158 /* Track.swift */,
+				8BA87DFBB17E4BCF93B0788C /* Trip.swift */,
+				8BA8777571DD330BA0846395 /* StopTrip.swift */,
+				8BA873061FEEC113B96D5899 /* Stop.swift */,
+				8BA875A802C6EBD9456940E7 /* Point.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		9F190B16A886C089E32C8A65 /* Frameworks */ = {
@@ -197,11 +234,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,6 +300,13 @@
 				78A19B0C1F36072300974F0A /* ScoreboardTableViewCell.swift in Sources */,
 				8BA87C7DC243CECDC2D7150F /* ServerCommunication.swift in Sources */,
 				8BA87C4EB4CB28ABB49BD859 /* Storage.swift in Sources */,
+				8BA87D952FF17597D5236D0E /* Route.swift in Sources */,
+				8BA878999CCD76744E38FE2A /* Track.swift in Sources */,
+				8BA87DB1E88CDD7712F9F43A /* Trip.swift in Sources */,
+				8BA87E4BE14E59170C02AB39 /* StopTrip.swift in Sources */,
+				8BA8771DF78A68CCE9F52EC6 /* Stop.swift in Sources */,
+				8BA87EB8276DB028334F52F9 /* Point.swift in Sources */,
+				8BA87187B3D9C43D330EE2E1 /* MainDB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
