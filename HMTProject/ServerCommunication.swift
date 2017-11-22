@@ -104,6 +104,17 @@ class ServerCommunication {
                                     nameA: item["NameA"].string!,
                                     nameB: item["NameB"].string!
                             ))
+                        }
+                        MainDB.instance.createUpdateTrips(trips: trips)
+
+                        var tracks = [Track]()
+                        for (_, item): (String, JSON) in json["Data"]["Tables"]["Tracks"]["Items"] {
+                            tracks.append(Track(
+                                    id: Int64(item["Id"].int!),
+                                    routeId: Int64(item["RouteId"].int!),
+                                    centerLatitude: item["CenterLatitude"].double!,
+                                    centerLongitude: item["CenterLongitude"].double!
+                            ))
                             var points = [Point]()
                             for (_, point): (String, JSON) in item["Points"] {
                                 points.append(Point(
@@ -116,17 +127,6 @@ class ServerCommunication {
                                 ))
                             }
                             MainDB.instance.createUpdatePoints(points: points)
-                        }
-                        MainDB.instance.createUpdateTrips(trips: trips)
-
-                        var tracks = [Track]()
-                        for (_, item): (String, JSON) in json["Data"]["Tables"]["Tracks"]["Items"] {
-                            tracks.append(Track(
-                                    id: Int64(item["Id"].int!),
-                                    routeId: Int64(item["RouteId"].int!),
-                                    centerLatitude: item["CenterLatitude"].double!,
-                                    centerLongitude: item["CenterLongitude"].double!
-                            ))
                         }
                         MainDB.instance.createUpdateTracks(tracks: tracks)
 
@@ -141,7 +141,7 @@ class ServerCommunication {
                         MainDB.instance.createUpdateStopTrips(stopTrips: stopTrips)
 
                         var routes = [Route]()
-                        for (_, item): (String, JSON) in json["Data"]["Tables"]["StopTrips"]["Items"] {
+                        for (_, item): (String, JSON) in json["Data"]["Tables"]["Routes"]["Items"] {
                             routes.append(Route(
                                     id: Int64(item["Id"].int!),
                                     number: item["Number"].string!,
