@@ -118,12 +118,12 @@ class ServerCommunication {
                             var points = [Point]()
                             for (_, point): (String, JSON) in item["Points"] {
                                 points.append(Point(
-                                        id: Int64(item["Id"].int!),
-                                        trackId: Int64(item["TrackId"].int!),
-                                        trackType: item["TrackType"].int!,
-                                        pointSort: item["PointSort"].int!,
-                                        latitude: item["Latitude"].double!,
-                                        longitude: item["Longitude"].double!
+                                        id: Int64(point["Id"].int!),
+                                        trackId: Int64(point["TrackId"].int!),
+                                        trackType: point["TrackType"].int!,
+                                        pointSort: point["PointSort"].int!,
+                                        latitude: point["Latitude"].double!,
+                                        longitude: point["Longitude"].double!
                                 ))
                             }
                             MainDB.instance.createUpdatePoints(points: points)
