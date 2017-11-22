@@ -7,14 +7,19 @@ import Foundation
 
 class Point {
     let id: Int64?
-    var trackId:   Int64?
-    var trackType: UInt?
+    var trackId: Int64?
+    var trackType: Int?
     var pointSort: Int?
-    var latitude:  Float64?
+    var latitude: Float64?
     var longitude: Float64?
 
 
-    init(id: Int64) {
+    init(id: Int64, trackId: Int64, trackType: Int, pointSort: Int, latitude: Float64, longitude: Float64) {
         self.id = id
+        self.trackId = trackId
+        self.trackType = trackType
+        self.pointSort = pointSort
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

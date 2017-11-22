@@ -64,9 +64,9 @@ class MainDB {
             db = try Connection("\(path)/Database.sqlite3")
         } catch {
             db = nil
-            print ("Unable to open database")
+            print("Unable to open database")
         }
-        print ("Conected")
+        print("Conected")
         createTable()
     }
 
@@ -96,6 +96,9 @@ class MainDB {
                 table.column(latitude)
                 table.column(longitude)
                 table.column(name)
+                table.column(busType)
+                table.column(trolleybusType)
+                table.column(tramType)
             })
 
             try db!.run(stopTripTable.create(ifNotExists: true) { table in
@@ -125,6 +128,116 @@ class MainDB {
             try db!.run(tripTable.createIndex(routeId, ifNotExists: true))
         } catch {
             print("Unable to create table")
+        }
+    }
+
+    func createUpdatePoints(points: [Point]) {
+        do {
+            try db!.transaction {
+                for point in points {
+                    try db!.run(pointTable.insert(or: .replace,
+                            id <- point.id!,
+                            trackId <- point.trackId!,
+                            trackType <- point.trackType!,
+                            pointSort <- point.pointSort!,
+                            latitude <- point.latitude!,
+                            longitude <- point.longitude!
+                    ))
+                }
+            }
+        } catch {
+            print("Unable to create update Points")
+        }
+    }
+
+    func createUpdateRoutes(routes: [Route]) {
+        do {
+            try db!.transaction {
+                for route in routes {
+                    try db!.run(routeTable.insert(or: .replace,
+                            id <- route.id!,
+                            number <- route.number!,
+                            name <- route.name!,
+                            sortPrefix <- route.sortPrefix!
+                    ))
+                }
+            }
+        } catch {
+            print("Unable to create update Routes")
+        }
+    }
+
+    func createUpdateStops(stops: [Stop]) {
+        do {
+            try db!.transaction {
+                for stop in stops {
+                    try db!.run(stopTable.insert(or: .replace,
+                            id <- stop.id!,
+                            MTStopId <- stop.MTStopId!,
+                            bearing <- stop.bearing!,
+                            latitude <- stop.latitude!,
+                            longitude <- stop.longitude!,
+                            name <- stop.name!,
+                            busType <- stop.busType!,
+                            trolleybusType <- stop.trolleybusType!,
+                            tramType <- stop.tramType!
+                    ))
+                }
+            }
+        } catch {
+            print("Unable to create update Stops")
+        }
+    }
+
+    func createUpdateStopTrips(stopTrips: [StopTrip]) {
+        do {
+            try db!.transaction {
+                for stopTrip in stopTrips {
+                    try db!.run(stopTripTable.insert(or: .replace,
+                            id <- stopTrip.id!,
+                            tripId <- stopTrip.tripId!,
+                            stopId <- stopTrip.stopId!
+                    ))
+                }
+            }
+        } catch {
+            print("Unable to create update StopTrips")
+        }
+    }
+
+    func createUpdateTracks(tracks: [Track]) {
+        do {
+            try db!.transaction {
+                for track in tracks {
+                    try db!.run(trackTable.insert(or: .replace,
+                            id <- track.id!,
+                            routeId <- track.routeId!,
+                            centerLatitude <- track.centerLatitude!,
+                            centerLongitude <- track.centerLongitude!
+                    ))
+                }
+            }
+        } catch {
+            print("Unable to create update Tracks")
+        }
+    }
+
+    func createUpdateTrips(trips: [Trip]) {
+        do {
+            try db!.transaction {
+                for trip in trips {
+                    try db!.run(tripTable.insert(or: .replace,
+                            id <- trip.id!,
+                            routeId <- trip.routeId!,
+                            endStopA <- trip.endStopA!,
+                            endStopB <- trip.endStopB!,
+                            nameA <- trip.nameA!,
+                            nameB <- trip.nameB!
+                    ))
+                }
+            }
+        } catch {
+            print("Unable to create update Trips")
         }
     }
 

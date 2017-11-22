@@ -12,7 +12,10 @@ class Track {
     var centerLongitude: Float64?
 
 
-    init(id: Int64) {
+    init(id: Int64, routeId: Int64, centerLatitude: Float64, centerLongitude: Float64) {
         self.id = id
+        self.routeId = routeId
+        self.centerLatitude = centerLatitude
+        self.centerLongitude = centerLongitude
     }
 }

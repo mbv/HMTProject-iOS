@@ -17,7 +17,15 @@ class Stop {
     var tramType: Bool?
 
 
-    init(id: Int64) {
+    init(id: Int64, MTStopId: Int64, bearing: Int64, latitude: Float64, longitude: Float64, name: String, busType: Bool, trolleybusType: Bool, tramType: Bool) {
         self.id = id
+        self.MTStopId = MTStopId
+        self.bearing = bearing
+        self.latitude = latitude
+        self.longitude = longitude
+        self.name = name
+        self.busType = busType
+        self.trolleybusType = trolleybusType
+        self.tramType = tramType
     }
 }

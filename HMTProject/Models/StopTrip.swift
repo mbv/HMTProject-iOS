@@ -7,10 +7,12 @@ import Foundation
 
 class StopTrip {
     let id: Int64?
-    var tripId:   Int64?
-    var stopId:   Int64?
+    var tripId: Int64?
+    var stopId: Int64?
 
-    init(id: Int64) {
+    init(id: Int64, tripId:   Int64, stopId:   Int64) {
         self.id = id
+        self.tripId = tripId
+        self.stopId = stopId
     }
 }

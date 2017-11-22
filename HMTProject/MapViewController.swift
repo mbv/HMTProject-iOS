@@ -402,7 +402,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                 self.ScoreboardTableView.reloadData()
                 removeVehicles()
 
-                    serverCommunication.getParams()
+                    //serverCommunication.getParams()
+                    serverCommunication.getUpdates()
                     //socket?.emit("get", data)
                     /*let param: [String: String] = [
                         "p": "minsk",

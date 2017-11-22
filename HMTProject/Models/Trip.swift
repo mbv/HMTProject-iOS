@@ -14,7 +14,12 @@ class Trip {
     var nameB: String?
 
 
-    init(id: Int64) {
+    init(id: Int64, routeId: Int64, endStopA: String, endStopB: String, nameA: String, nameB: String) {
         self.id = id
+        self.routeId = routeId
+        self.endStopA = endStopA
+        self.endStopB = endStopB
+        self.nameA = nameA
+        self.nameB = nameB
     }
 }
