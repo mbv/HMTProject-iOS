@@ -241,7 +241,27 @@ class MainDB {
         }
     }
 
-    func hmm() {
+    func getStops() -> [Stop] {
+        var stops = [Stop]()
 
+        do {
+            for stop in try db!.prepare(stopTable) {
+                stops.append(Stop(
+                        id: stop[id],
+                        MTStopId: stop[MTStopId],
+                        bearing: stop[bearing],
+                        latitude: stop[latitude],
+                        longitude: stop[longitude],
+                        name: stop[name],
+                        busType: stop[busType],
+                        trolleybusType: stop[trolleybusType],
+                        tramType: stop[tramType]
+                ))
+            }
+        } catch {
+            print("Select failed")
+        }
+
+        return stops
     }
 }

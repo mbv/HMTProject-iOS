@@ -13,11 +13,7 @@ import SwiftyJSON
 class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     struct Marker {
-        var id: Int?
-        var longitude: Double?
-        var latitude: Double?
-        var title: String?
-        var bearing: Int?
+        var stopModel: Stop
         var marker: GMSMarker?
     }
 
@@ -49,8 +45,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     }
 
     let iconStop = UIImage(named: "stop")
-    let iconStopStart = UIImage(named: "stop_start")
+    let iconStopStart = UIImage(named: "stop_start_bus")
     let iconStopSelected = UIImage(named: "stop_selected")
+
+    let iconStopBus = UIImage(named: "stop_bus")
+    let iconStopBusTrolleybus = UIImage(named: "stop_bus_trolleybus")
+    let iconStopTram = UIImage(named: "stop_tram")
+    let iconStopTrolleybus = UIImage(named: "stop_trolleybus")
 
     let iconBus = UIImage(named: "bus")!
     let iconBusR = UIImage(named: "bus_r")!
@@ -65,9 +66,9 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     @IBOutlet weak var ScoreboardTableView: UITableView!
     @IBOutlet weak var myMapView: GMSMapView!
     var locationManager = CLLocationManager()
-    var markers = [Int: Marker]()
-    var markerMapToStopId = [GMSMarker: Int]()
-    var selectedMarker: Int = -1
+    var markers = [Int64: Marker]()
+    var markerMapToStopId = [GMSMarker: Int64]()
+    var selectedMarker: Int64 = -1
 
     var vehicles = [Int: Vehicle]()
     var vehiclesMapToId = [GMSMarker: Int]()
@@ -79,8 +80,25 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     var routeTrackA: GMSPolyline?
     var routeTrackB: GMSPolyline?
 
-    var apiHelper : MTApiHelper = MTApiHelper.init()
-    var serverCommunication : ServerCommunication = ServerCommunication.init()
+    var apiHelper: MTApiHelper = MTApiHelper.init()
+    var serverCommunication: ServerCommunication = ServerCommunication.init()
+
+    func selectStopIcon(stop: Stop) -> UIImage? {
+        if stop.bearing == -1 {
+            return iconStopStart
+        } else {
+            if stop.busType! && stop.trolleybusType! {
+                return iconStopBusTrolleybus
+            } else if stop.busType! {
+                return iconStopBus
+            } else if stop.trolleybusType! {
+                return iconStopTrolleybus
+            } else if stop.tramType! {
+                return iconStopTram
+            }
+        }
+        return iconStop
+    }
 
 
     override func viewDidLoad() {
@@ -91,8 +109,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         self.automaticallyAdjustsScrollViewInsets = false
 
         let camera = GMSCameraPosition.camera(withLatitude: 53.93146, longitude: 27.48005, zoom: 10.0)
-
-        MainDB.instance.hmm()
 
 
         self.myMapView.camera = camera
@@ -110,45 +126,35 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         let region: GMSVisibleRegion = mapView.projection.visibleRegion()
         let bounds: GMSCoordinateBounds = GMSCoordinateBounds(region: region)
 
-        if let path = Bundle.main.path(forResource: "Stops", ofType: "json") {
-            if let data = NSData(contentsOfFile: path) {
-                let json = JSON(data)
-                for (_, subJson): (String, JSON) in json {
-                    var tmpMarker = Marker()
-                    tmpMarker.id = subJson["Id"].int
-                    tmpMarker.latitude = subJson["Latitude"].double
-                    tmpMarker.longitude = subJson["Longitude"].double
-                    tmpMarker.title = subJson["Name"].string
-                    tmpMarker.bearing = subJson["Bearing"].int
+        let stops = MainDB.instance.getStops()
 
-                    let position = CLLocationCoordinate2D(latitude: tmpMarker.latitude!, longitude: tmpMarker.longitude!)
-                    let tmpGMSMarker = GMSMarker(position: position)
-                    if tmpMarker.bearing == -1 {
-                        tmpGMSMarker.icon = iconStopStart
-                    } else {
-                        tmpGMSMarker.icon = iconStop
-                        tmpGMSMarker.rotation = CLLocationDegrees(tmpMarker.bearing!)
-                    }
+        for stop in stops {
+            var tmpMarker = Marker(stopModel: stop, marker: nil)
 
-                    tmpGMSMarker.title = tmpMarker.title
-                    tmpGMSMarker.isFlat = true
-                    tmpGMSMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
-                    tmpGMSMarker.appearAnimation = GMSMarkerAnimation.pop;
-
-                    if !bounds.contains(tmpGMSMarker.position) || mapView.camera.zoom < 14 {
-                        tmpGMSMarker.map = nil
-                    } else {
-                        tmpGMSMarker.map = mapView
-                    }
-
-                    tmpGMSMarker.userData = tmpMarker.id
-
-                    tmpMarker.marker = tmpGMSMarker
-
-                    markers[tmpMarker.id!] = tmpMarker
-                    markerMapToStopId[tmpGMSMarker] = tmpMarker.id!
-                }
+            let position = CLLocationCoordinate2D(latitude: stop.latitude!, longitude: stop.longitude!)
+            let tmpGMSMarker = GMSMarker(position: position)
+            tmpGMSMarker.icon = selectStopIcon(stop: stop)
+            if stop.bearing != -1 {
+                tmpGMSMarker.rotation = CLLocationDegrees(stop.bearing!)
             }
+
+            tmpGMSMarker.title = stop.name
+            tmpGMSMarker.isFlat = true
+            tmpGMSMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+            tmpGMSMarker.appearAnimation = GMSMarkerAnimation.pop;
+
+            if !bounds.contains(tmpGMSMarker.position) || mapView.camera.zoom < 14 {
+                tmpGMSMarker.map = nil
+            } else {
+                tmpGMSMarker.map = mapView
+            }
+
+            tmpGMSMarker.userData = stop.id
+
+            tmpMarker.marker = tmpGMSMarker
+
+            markers[stop.id!] = tmpMarker
+            markerMapToStopId[tmpGMSMarker] = stop.id!
         }
         //checkSocket()
         self.scoreboard = Scoreboard()
@@ -157,7 +163,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     }
 
 ///https://hmt.mbv-soft.ru
-    //ws://localhost:5000
+//ws://localhost:5000
     func checkSocket() {
         /*socket = SocketIOClient(socketURL: URL(string: "https://hmt.mbv-soft.ru")!, config: [.log(true), .compress])
 
@@ -387,11 +393,9 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
             if selectedMarker != markerId {
                 if selectedMarker != -1 {
                     let marker = markers[selectedMarker]!
-                    if marker.bearing == -1 {
-                        marker.marker?.icon = iconStopStart
-                    } else {
-                        marker.marker?.icon = iconStop
-                        marker.marker?.rotation = CLLocationDegrees(marker.bearing!)
+                    marker.marker?.icon = selectStopIcon(stop: marker.stopModel)
+                    if marker.stopModel.bearing != -1 {
+                        marker.marker?.rotation = CLLocationDegrees(marker.stopModel.bearing!)
                     }
                 }
                 selectedMarker = markerId
@@ -402,18 +406,18 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                 self.ScoreboardTableView.reloadData()
                 removeVehicles()
 
-                    //serverCommunication.getParams()
-                    serverCommunication.getUpdates()
-                    //socket?.emit("get", data)
-                    /*let param: [String: String] = [
-                        "p": "minsk",
-                        "tt": "bus",
-                        "r": "100",
-                        "v": "21",
-                    ]
-                    apiHelper.initUser(token: "", cookies: [ : ])
-                    apiHelper.GetData(url: "", parameters: param)*/
-                
+                //serverCommunication.getParams()
+                serverCommunication.getUpdates()
+                //socket?.emit("get", data)
+                /*let param: [String: String] = [
+                    "p": "minsk",
+                    "tt": "bus",
+                    "r": "100",
+                    "v": "21",
+                ]
+                apiHelper.initUser(token: "", cookies: [ : ])
+                apiHelper.GetData(url: "", parameters: param)*/
+
             }
         } else if self.vehiclesMapToId[marker] != nil {
             return false
@@ -442,7 +446,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         let region: GMSVisibleRegion = mapView.projection.visibleRegion()
         let bounds: GMSCoordinateBounds = GMSCoordinateBounds(region: region)
         for (_, marker) in markers {
-            if bounds.contains(marker.marker!.position) && ((mapView.camera.zoom >= 13) || (selectedMarker == marker.id! && mapView.camera.zoom >= 5)) {
+            if bounds.contains(marker.marker!.position) && ((mapView.camera.zoom >= 13) || (selectedMarker == marker.stopModel.id! && mapView.camera.zoom >= 5)) {
                 if marker.marker!.map == nil {
                     marker.marker!.map = mapView
                 }
