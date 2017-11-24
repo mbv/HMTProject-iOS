@@ -8,6 +8,8 @@ import SQLite
 
 class MainDB {
     static let instance = MainDB()
+    private init() {}
+
     private let db: Connection?
 
 
@@ -32,6 +34,7 @@ class MainDB {
     private let name = Expression<String>("name")
 
     private let sortPrefix = Expression<Int64>("sortPrefix")
+    private let vehicleType = Expression<Int>("vehicleType")
 
     private let MTStopId = Expression<Int64>("MTStopId")
     private let bearing = Expression<Int64>("bearing")
@@ -87,6 +90,7 @@ class MainDB {
                 table.column(number)
                 table.column(name)
                 table.column(sortPrefix)
+                table.column(vehicleType)
             })
 
             try db!.run(stopTable.create(ifNotExists: true) { table in
@@ -158,7 +162,8 @@ class MainDB {
                             id <- route.id!,
                             number <- route.number!,
                             name <- route.name!,
-                            sortPrefix <- route.sortPrefix!
+                            sortPrefix <- route.sortPrefix!,
+                            vehicleType <- route.vehicleType!
                     ))
                 }
             }
@@ -263,5 +268,24 @@ class MainDB {
         }
 
         return stops
+    }
+
+    func getRoutesAcrossStop(stop: Stop) -> [Route] {
+        var routes = [Route]()
+
+        do {
+            for route in try db!.prepare(routeTable.join(tripTable, on: routeTable[id] == tripTable[routeId]).join(stopTripTable, on: stopTripTable[tripId] == tripTable[id]).select(routeTable[*]).filter(stopTripTable[stopId] == stop.id!)) {
+                routes.append(Route(
+                        id: route[id],
+                        number: route[number],
+                        name: route[name],
+                        sortPrefix: route[sortPrefix],
+                        vehicleType: route[vehicleType]
+                ))
+            }
+        } catch {
+            print("Select failed: \(error)")
+        }
+        return routes;
     }
 }

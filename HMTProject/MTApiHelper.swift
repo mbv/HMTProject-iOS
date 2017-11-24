@@ -10,11 +10,12 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class MTApiHelper: InitializerUser, OperationExecutor {
+class MTApiHelper {
     private let USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.0147.211 Safari/537.36"
     private var sessionManager: SessionManager
     private var configurationSessionManager: URLSessionConfiguration
     private var token: String?
+    private var responseHandler: MTAPICallbacks?
 
     private let COOKIE_EXPIRES_TIME = TimeInterval(60 * 60 * 24 * 365)
     private let COOKIE_PATH = "minsktrans.by"
@@ -36,6 +37,8 @@ class MTApiHelper: InitializerUser, OperationExecutor {
         configurationSessionManager.httpAdditionalHeaders = defaultHeaders
 
         sessionManager = Alamofire.SessionManager(configuration: configurationSessionManager)
+
+        responseHandler = MTResponseHandler.instance
     }
 
     func initUser(cookies: [String: String]) {
@@ -44,11 +47,7 @@ class MTApiHelper: InitializerUser, OperationExecutor {
         }
     }
 
-    func execute(data: JSON) {
-
-    }
-
-    func GetData(url:String, parameters: Parameters) {
+    func GetData(url: String, parameters: Parameters, originalRequest: Parameters) {
         let localParameters = parameters
 
         let headers: HTTPHeaders = [
@@ -57,16 +56,21 @@ class MTApiHelper: InitializerUser, OperationExecutor {
             "Cache-Control": "no-cache",
         ]
 
-        sessionManager.request(url, method: .post, parameters: localParameters, headers: headers).validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                print("JSON: \(json)")
-            case .failure(let error):
-                print(response)
-                print(error)
-            }
-        }
+        let queue = DispatchQueue(label: "mtapi-response-queue", qos: .utility, attributes: [.concurrent])
+
+        sessionManager.request(url, method: .post, parameters: localParameters, headers: headers).validate().responseJSON(
+                queue: queue,
+                completionHandler: { response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        responseHandler?.requestComplete(originalRequest, json)
+                        print("JSON: \(json)")
+                    case .failure(let error):
+                        print(response)
+                        print(error)
+                    }
+                })
     }
 
 
@@ -86,10 +90,6 @@ class MTApiHelper: InitializerUser, OperationExecutor {
 }
 
 
-protocol InitializerUser {
-    func initUser(cookies: [String: String])
-}
-
-protocol OperationExecutor {
-    func execute(data: JSON)
+protocol MTAPICallbacks {
+    func requestComplete(request: [String: Any], json: JSON)
 }

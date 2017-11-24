@@ -126,6 +126,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         let region: GMSVisibleRegion = mapView.projection.visibleRegion()
         let bounds: GMSCoordinateBounds = GMSCoordinateBounds(region: region)
 
+        serverCommunication.getUpdates()
+
         let stops = MainDB.instance.getStops()
 
         for stop in stops {
@@ -406,8 +408,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
                 self.ScoreboardTableView.reloadData()
                 removeVehicles()
 
-                //serverCommunication.getParams()
-                serverCommunication.getUpdates()
+                serverCommunication.getParams(stop: markers[markerId]!.stopModel)
+                //serverCommunication.getUpdates()
                 //socket?.emit("get", data)
                 /*let param: [String: String] = [
                     "p": "minsk",

@@ -18,9 +18,7 @@ class ServerCommunication {
     var apiHelper: MTApiHelper = MTApiHelper.init()
 
 
-    var initializerUser: InitializerUser?
     var storage: Storage?
-    var operationExecutor: OperationExecutor?
 
     init() {
 
@@ -30,20 +28,35 @@ class ServerCommunication {
 
     }
 
-    func getParams() {
+    func getParams(stop: Stop) {
+        let routes = MainDB.instance.getRoutesAcrossStop(stop: stop)
+        var requests: [Any] = [
+            [
+                "type": "ScoreBoard",
+                "params": [
+                    "city": "minsk",
+                    "stop": "\(stop.MTStopId!)"
+                ],
+                "requestId": 0
+            ]
+        ]
+
+        for route in routes {
+            requests.append([
+                "type": "Vehicle",
+                "params": [
+                    "city": "minsk",
+                    "transportType": route.vehicleTypeName(),
+                    "route": route.number!
+                ],
+                "requestId": 1
+            ])
+        }
+
         let params: Parameters = [
             "type": "iOS",
             "uid": UIDevice.current.identifierForVendor!.uuidString,
-            "requests": [
-                [
-                    "type": "Vehicle",
-                    "params": [
-                        "city": "minsk",
-                        "transportType": "bus",
-                        "route": "100"
-                    ]
-                ]
-            ]
+            "requests": requests
         ]
         Alamofire.request("http://localhost:5000/request", method: .post, parameters: params, encoding: JSONEncoding.default)
                 .responseJSON { response in
@@ -56,7 +69,7 @@ class ServerCommunication {
                         }
                         self.apiHelper.initUser(cookies: cookies)
                         for (_, request): (String, JSON) in json["Requests"] {
-                            self.apiHelper.GetData(url: request["Url"].string!, parameters: request["Params"].dictionaryObject!)
+                            self.apiHelper.GetData(url: request["Url"].string!, parameters: request["Params"].dictionaryObject!, originalRequest: request["Original"].dictionaryObject!)
                         }
                     case .failure(let error):
                         print(response)
@@ -72,8 +85,11 @@ class ServerCommunication {
             "uid": UIDevice.current.identifierForVendor!.uuidString,
             "LastChanges": 100
         ]
+        let queue = DispatchQueue(label: "server-response-queue", qos: .utility, attributes: [.concurrent])
         Alamofire.request("http://localhost:5000/updates", method: .post, parameters: params, encoding: JSONEncoding.default)
-                .responseJSON { response in
+                .responseJSON(
+                        queue: queue,
+                        completionHandler: { response in
                     switch response.result {
                     case .success(let value):
                         let json = JSON(value)
@@ -146,7 +162,8 @@ class ServerCommunication {
                                     id: Int64(item["Id"].int!),
                                     number: item["Number"].string!,
                                     name: item["Name"].string!,
-                                    sortPrefix: Int64(item["SortPrefix"].int!)
+                                    sortPrefix: Int64(item["SortPrefix"].int!),
+                                    vehicleType: item["VehicleType"].int!
                             ))
                         }
                         MainDB.instance.createUpdateRoutes(routes: routes)
@@ -157,7 +174,7 @@ class ServerCommunication {
                         print(error)
                     }
 
-                }
+                })
     }
 
     private func onUpdatedUserData(data: JSON?) {
