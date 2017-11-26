@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A5816B253D91E2FADD28759 /* MapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5813F2A6CEF47F4B8F70F8 /* MapStore.swift */; };
 		787D632E1F33B73500C8F59C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D632D1F33B73500C8F59C /* AppDelegate.swift */; };
 		787D63301F33B73500C8F59C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D632F1F33B73500C8F59C /* MapViewController.swift */; };
 		787D63321F33B73500C8F59C /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D63311F33B73500C8F59C /* SecondViewController.swift */; };
@@ -21,7 +22,6 @@
 		8BA87187B3D9C43D330EE2E1 /* MainDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87020E0BC3B18D39ACE55 /* MainDB.swift */; };
 		8BA8771DF78A68CCE9F52EC6 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA873061FEEC113B96D5899 /* Stop.swift */; };
 		8BA878999CCD76744E38FE2A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA876FEDEE5F7F28EBDB158 /* Track.swift */; };
-		8BA87C4EB4CB28ABB49BD859 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */; };
 		8BA87C7DC243CECDC2D7150F /* ServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87503D6556DC87D134042 /* ServerCommunication.swift */; };
 		8BA87D718A7500DB72E53637 /* MTResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA879879A2B89687E83C7E2 /* MTResponseHandler.swift */; };
 		8BA87D952FF17597D5236D0E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA87D4D8DA90BFBEFE44C54 /* Route.swift */; };
@@ -33,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A5813F2A6CEF47F4B8F70F8 /* MapStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapStore.swift; sourceTree = "<group>"; };
 		202EE2BF9836FAEF544AC4BA /* Pods-HMTProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.debug.xcconfig"; sourceTree = "<group>"; };
 		408F7BAFD9E5707004301A55 /* Pods_HMTProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HMTProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		787D632A1F33B73500C8F59C /* HMTProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HMTProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,7 +56,6 @@
 		8BA876FEDEE5F7F28EBDB158 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		8BA8777571DD330BA0846395 /* StopTrip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopTrip.swift; sourceTree = "<group>"; };
 		8BA879879A2B89687E83C7E2 /* MTResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTResponseHandler.swift; sourceTree = "<group>"; };
-		8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		8BA87D4D8DA90BFBEFE44C54 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		8BA87DFBB17E4BCF93B0788C /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		9121142D19FA7F0C24377D63 /* Pods-HMTProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-HMTProject/Pods-HMTProject.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,10 +118,10 @@
 				78E32E521F3E3A9F00AFDDBB /* UIImage.swift */,
 				F4C2E1C61F5599AA0091C279 /* MTApiHelper.swift */,
 				8BA87503D6556DC87D134042 /* ServerCommunication.swift */,
-				8BA87B0BA5ED1CCAB7C0FA21 /* Storage.swift */,
 				8BA87CBA246F11AAE63589BE /* Models */,
 				8BA87560226A4DA01E352C2D /* Database */,
 				8BA8789F2229935FA6C7972E /* Services */,
+				1A5813F2A6CEF47F4B8F70F8 /* MapStore.swift */,
 			);
 			path = HMTProject;
 			sourceTree = "<group>";
@@ -310,7 +310,6 @@
 				787D63301F33B73500C8F59C /* MapViewController.swift in Sources */,
 				78A19B0C1F36072300974F0A /* ScoreboardTableViewCell.swift in Sources */,
 				8BA87C7DC243CECDC2D7150F /* ServerCommunication.swift in Sources */,
-				8BA87C4EB4CB28ABB49BD859 /* Storage.swift in Sources */,
 				8BA87D952FF17597D5236D0E /* Route.swift in Sources */,
 				8BA878999CCD76744E38FE2A /* Track.swift in Sources */,
 				8BA87DB1E88CDD7712F9F43A /* Trip.swift in Sources */,
@@ -319,6 +318,7 @@
 				8BA87EB8276DB028334F52F9 /* Point.swift in Sources */,
 				8BA87187B3D9C43D330EE2E1 /* MainDB.swift in Sources */,
 				8BA87D718A7500DB72E53637 /* MTResponseHandler.swift in Sources */,
+				1A5816B253D91E2FADD28759 /* MapStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

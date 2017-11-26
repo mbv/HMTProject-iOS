@@ -11,6 +11,8 @@ import Alamofire
 import SwiftyJSON
 
 class MTApiHelper {
+    static let instance = MTApiHelper()
+
     private let USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.0147.211 Safari/537.36"
     private var sessionManager: SessionManager
     private var configurationSessionManager: URLSessionConfiguration
@@ -29,7 +31,7 @@ class MTApiHelper {
     private let PARAM_TOKEN = "__RequestVerificationToken"
 
 
-    init() {
+    private init() {
         var defaultHeaders = Alamofire.SessionManager.defaultHTTPHeaders
         defaultHeaders["User-Agent"] = USER_AGENT
 
@@ -47,7 +49,7 @@ class MTApiHelper {
         }
     }
 
-    func GetData(url: String, parameters: Parameters, originalRequest: Parameters) {
+    func GetData(url: String, parameters: Parameters, originalRequest: [String: Any]) {
         let localParameters = parameters
 
         let headers: HTTPHeaders = [
@@ -64,8 +66,8 @@ class MTApiHelper {
                     switch response.result {
                     case .success(let value):
                         let json = JSON(value)
-                        responseHandler?.requestComplete(originalRequest, json)
-                        print("JSON: \(json)")
+                        self.responseHandler?.requestComplete(requestData: originalRequest, json: json)
+                        //print("JSON: \(json)")
                     case .failure(let error):
                         print(response)
                         print(error)
@@ -91,5 +93,5 @@ class MTApiHelper {
 
 
 protocol MTAPICallbacks {
-    func requestComplete(request: [String: Any], json: JSON)
+    func requestComplete(requestData: [String: Any], json: JSON)
 }

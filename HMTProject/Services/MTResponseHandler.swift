@@ -4,14 +4,32 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class MTResponseHandler: MTAPICallbacks {
     static let instance = MTResponseHandler()
-    private init() {}
 
-    func requestComplete(request: [String: Any], json: SwiftyJSON.JSON) {
-        switch request["Type"] {
-            case ""
+    private init() {
+    }
+
+    func requestComplete(requestData: [String: Any], json: JSON) {
+        //print(request)
+        let request = requestData["request"] as! [String: Any]
+        switch String(describing: request["type"]!) {
+        case "Vehicle":
+            print("Vehicle")
+            DispatchQueue.main.async {
+                MapStore.instance.getVehiclesFromJson(json: json, route: requestData["data"] as! Route)
+            }
+        case "ScoreBoard":
+            print("ScoreBoard")
+            DispatchQueue.main.async {
+                MapStore.instance.getScoreboardFromJson(json: json, stop: requestData["data"] as! Stop)
+            }
+
+        default:
+            print("default")
+
         }
     }
 }

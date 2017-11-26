@@ -8,7 +8,6 @@ import SQLite
 
 class MainDB {
     static let instance = MainDB()
-    private init() {}
 
     private let db: Connection?
 
