@@ -11,6 +11,7 @@ class ServerCommunication {
     static let instance = ServerCommunication()
 
     private let SERVER_URL = "https://hmt.mbv-soft.ru"
+    //private let SERVER_URL = "http://localhost:5000"
 
     private let COMMAND_UPDATED_USER_DATA = "updated_user_data"
     private let COMMAND_UPDATED_DATA = "updated_data"
@@ -83,7 +84,7 @@ class ServerCommunication {
         let params: Parameters = [
             "type": "iOS",
             "uid": UIDevice.current.identifierForVendor!.uuidString,
-            "LastChanges": 100
+            "LastChanges": MainDB.instance.getCreateLastUpdate()
         ]
         let queue = DispatchQueue(label: "server-response-queue", qos: .utility, attributes: [.concurrent])
         Alamofire.request("\(SERVER_URL)/updates", method: .post, parameters: params, encoding: JSONEncoding.default)
@@ -167,6 +168,8 @@ class ServerCommunication {
                                     ))
                                 }
                                 MainDB.instance.createUpdateRoutes(routes: routes)
+
+                                MainDB.instance.createUpdateLastUpdate(newValue: json["Data"]["LastUpdates"].int64!)
 
                                 print("Done")
                             case .failure(let error):

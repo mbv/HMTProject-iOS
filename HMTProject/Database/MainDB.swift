@@ -22,6 +22,7 @@ class MainDB {
     private let settingsTable = Table("settings")
 
     private let id = Expression<Int64>("id")
+    private let valueInt64 = Expression<Int64>("valueInt64")
     private let trackId = Expression<Int64>("trackId")
     private let trackType = Expression<Int>("trackType")
     private let pointSort = Expression<Int>("pointSort")
@@ -56,6 +57,8 @@ class MainDB {
 
     private let lastUpdate = Expression<Int64>("lastUpdate")
 
+    private let settingIdLastUpdate: Int64 = 1
+
 
     private init() {
         let path = NSSearchPathForDirectoriesInDomains(
@@ -74,6 +77,11 @@ class MainDB {
 
     func createTable() {
         do {
+            try db!.run(settingsTable.create(ifNotExists: true) { table in
+                table.column(id, primaryKey: true)
+                table.column(valueInt64)
+            })
+
             try db!.run(pointTable.create(ifNotExists: true) { table in
                 table.column(id, primaryKey: true)
                 table.column(trackId)
@@ -131,6 +139,28 @@ class MainDB {
             try db!.run(tripTable.createIndex(routeId, ifNotExists: true))
         } catch {
             print("Unable to create table")
+        }
+    }
+
+    func getCreateLastUpdate() -> Int64 {
+        do {
+            if let setting = try db!.pluck(settingsTable.filter(settingsTable[id] == settingIdLastUpdate)) {
+                return setting[valueInt64]
+            }
+        } catch {
+            print("error to select setting")
+        }
+        return 0
+    }
+
+    func createUpdateLastUpdate(newValue: Int64) {
+        do {
+            try db!.run(settingsTable.insert(or: .replace,
+                    id <- settingIdLastUpdate,
+                    valueInt64 <- newValue
+            ))
+        } catch {
+            print("Unable to create update Points")
         }
     }
 
