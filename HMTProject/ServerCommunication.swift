@@ -13,10 +13,6 @@ class ServerCommunication {
     private let SERVER_URL = "https://hmt.mbv-soft.ru"
     //private let SERVER_URL = "http://localhost:5000"
 
-    private let COMMAND_UPDATED_USER_DATA = "updated_user_data"
-    private let COMMAND_UPDATED_DATA = "updated_data"
-    private let COMMAND_OPERATION_DATA = "operation_data"
-
     private var nextRequestId: Int64 = 1;
     private var mapRequestIdToData = [Int64: [String: Any]]()
 
@@ -178,6 +174,29 @@ class ServerCommunication {
                             }
 
                         })
+    }
+
+    func clearRequests(routeId: Int64) {
+        var requests = [Request]()
+        for request in self.requests {
+            let requestData = self.mapRequestIdToData[request.requestId]!
+            let requestType = (requestData["request"] as! [String: Any])["type"]!
+
+            switch String(describing: requestType) {
+            case "Vehicle":
+                if let route = requestData["data"] as? Route {
+                    if route.id == routeId {
+                        requests.append(request)
+                    }
+                }
+            case "ScoreBoard":
+                requests.append(request)
+            default:
+                print("default")
+            }
+
+        }
+        self.requests = requests
     }
 
     private func formatRequest(request: [String: Any], additionalData: Any) -> Any {

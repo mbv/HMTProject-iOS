@@ -187,10 +187,10 @@ class MapStore {
     }
 
     func removeVehicles(without routeId: Int64) {
-        for (_, vehicle) in self.vehicleMarkers {
+        for (key, vehicle) in self.vehicleMarkers {
             if vehicle.routeId != routeId {
                 vehicle.marker?.map = nil
-                self.vehicleMarkers.removeValue(forKey: vehicle.routeId!)
+                self.vehicleMarkers.removeValue(forKey: key)
             }
         }
     }
@@ -322,6 +322,9 @@ class MapStore {
         let vehicleType = mapVehicleType[stopRoute.VehicleType!]!
 
         if let route = MainDB.instance.getRouteByParam(vehicleTypeValue: vehicleType, numberValue: stopRoute.Number!) {
+
+            removeVehicles(without: route.id!)
+            ServerCommunication.instance.clearRequests(routeId: route.id!)
 
             let pathAColors = [
                 UIColor(red: 0.12, green: 0.48, blue: 0.96, alpha: 0.7),

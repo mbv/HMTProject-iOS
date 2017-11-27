@@ -44,7 +44,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         MapStore.instance.setViews(mapView: myMapView!, scoreboardTableView: ScoreboardTableView!)
 
         MapStore.instance.loadStops()
-        //checkSocket()
     }
 
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
