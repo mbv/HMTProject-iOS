@@ -317,4 +317,41 @@ class MainDB {
         }
         return routes;
     }
+
+    func getPointsForRoute(route: Route, trackTypeValue: Int) -> [Point] {
+        var points = [Point]()
+
+        do {
+            for point in try db!.prepare(pointTable.join(trackTable, on: trackTable[id] == pointTable[trackId]).select(pointTable[*]).order(pointTable[pointSort]).filter(trackTable[routeId] == route.id! && pointTable[trackType] == trackTypeValue)) {
+                points.append(Point(
+                        id: point[id],
+                        trackId: point[trackId],
+                        trackType: point[trackType],
+                        pointSort: point[pointSort],
+                        latitude: point[latitude],
+                        longitude: point[longitude]
+                ))
+            }
+        } catch {
+            print("Select failed: \(error)")
+        }
+        return points
+    }
+
+    func getRouteByParam(vehicleTypeValue: Int, numberValue: String) -> Route? {
+        do {
+            if let route = try db!.pluck(routeTable.filter(routeTable[vehicleType] == vehicleTypeValue && routeTable[number] == numberValue)) {
+                return Route(
+                        id: route[id],
+                        number: route[number],
+                        name: route[name],
+                        sortPrefix: route[sortPrefix],
+                        vehicleType: route[vehicleType]
+                )
+            }
+        } catch {
+            print("error to select route")
+        }
+        return nil
+    }
 }

@@ -17,12 +17,10 @@ class MTResponseHandler: MTAPICallbacks {
         let request = requestData["request"] as! [String: Any]
         switch String(describing: request["type"]!) {
         case "Vehicle":
-            print("Vehicle")
             DispatchQueue.main.async {
                 MapStore.instance.getVehiclesFromJson(json: json, route: requestData["data"] as! Route)
             }
         case "ScoreBoard":
-            print("ScoreBoard")
             DispatchQueue.main.async {
                 MapStore.instance.getScoreboardFromJson(json: json, stop: requestData["data"] as! Stop)
             }

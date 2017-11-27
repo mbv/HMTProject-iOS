@@ -58,7 +58,7 @@ class MTApiHelper {
             "Cache-Control": "no-cache",
         ]
 
-        let queue = DispatchQueue(label: "mtapi-response-queue", qos: .utility, attributes: [.concurrent])
+        let queue = DispatchQueue(label: "mtapi-response-queue", qos: .utility)
 
         sessionManager.request(url, method: .post, parameters: localParameters, headers: headers).validate().responseJSON(
                 queue: queue,

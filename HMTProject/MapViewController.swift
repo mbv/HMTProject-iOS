@@ -18,13 +18,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     var locationManager = CLLocationManager()
 
 
-
-    var clientId: Int = 0
-
-    var routeTrackA: GMSPolyline?
-    var routeTrackB: GMSPolyline?
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,83 +45,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 
         MapStore.instance.loadStops()
         //checkSocket()
-    }
-
-///https://hmt.mbv-soft.ru
-//ws://localhost:5000
-    func checkSocket() {
-        /*socket = SocketIOClient(socketURL: URL(string: "https://hmt.mbv-soft.ru")!, config: [.log(true), .compress])
-
-        socket?.on(clientEvent: .connect) { data, ack in
-            print("socket connected")
-            let json = JSON(["type": "iOS", "id": UIDevice.current.identifierForVendor!.uuidString])
-
-            if let data = json.rawString() {
-                self.socket?.emit("initClient", data)
-            }
-        }
-
-        socket?.on("init") { data, ack in
-            if let rawStringData = data[0] as? String {
-                let json = JSON(data: rawStringData.data(using: String.Encoding.utf8)!)
-                self.clientId = json["ClientId"].int!
-            }
-        }
-
-
-
-        socket?.on("sendR") { data, ack in
-            if let rawStringData = data[0] as? String {
-
-                let json = JSON(data: rawStringData.data(using: String.Encoding.utf8)!)
-
-                let vehicleType = json["VehicleType"].int
-
-                let pathAColors = [
-                    UIColor(red: 0.12, green: 0.48, blue: 0.96, alpha: 0.7),
-                    UIColor(red: 0.13, green: 0.96, blue: 0.36, alpha: 0.7),
-                    UIColor(red: 0.60, green: 0.13, blue: 0.96, alpha: 0.7)
-                ]
-
-
-                let pathBColors = [
-                    UIColor(red: 0.96, green: 0.29, blue: 0.12, alpha: 0.7),
-                    UIColor(red: 0.96, green: 0.84, blue: 0.13, alpha: 0.7),
-                    UIColor(red: 0.92, green: 0.53, blue: 0.27, alpha: 0.7)
-                ]
-
-                self.routeTrackA?.map = nil
-                self.routeTrackB?.map = nil
-
-                var path = GMSMutablePath()
-
-                for (_, subJson): (String, JSON) in json["Track"]["PointsA"] {
-                    path.add(CLLocationCoordinate2D(latitude: subJson["Latitude"].double!, longitude: subJson["Longitude"].double!))
-                }
-
-                self.routeTrackA = GMSPolyline(path: path)
-
-                self.routeTrackA?.map = self.myMapView
-                self.routeTrackA?.strokeWidth = 5
-
-                self.routeTrackA?.strokeColor = pathAColors[vehicleType!]
-
-                path = GMSMutablePath()
-
-                for (_, subJson): (String, JSON) in json["Track"]["PointsB"] {
-                    path.add(CLLocationCoordinate2D(latitude: subJson["Latitude"].double!, longitude: subJson["Longitude"].double!))
-                }
-
-                self.routeTrackB = GMSPolyline(path: path)
-
-                self.routeTrackB?.map = self.myMapView
-                self.routeTrackB?.strokeWidth = 5
-
-                self.routeTrackB?.strokeColor = pathBColors[vehicleType!]
-            }
-        }
-
-        socket?.connect()*/
     }
 
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -162,13 +78,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let tmpScoreboard = MapStore.instance.scoreboard?.Routes?[indexPath.row]
-
-        let json = JSON(["type": "route", "id": tmpScoreboard!.Id!])
-        MapStore.instance.removeVehicles()
-
-        if let data = json.rawString() {
-            //socket?.emit("get", data)
+        if let tmpStopRoute = MapStore.instance.scoreboard?.Routes?[indexPath.row] {
+            MapStore.instance.showRoute(stopRoute: tmpStopRoute)
         }
     }
 

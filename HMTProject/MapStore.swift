@@ -46,6 +46,12 @@ class MapStore {
         var Time: Int?
     }
 
+    let mapVehicleType: [String: Int] = [
+        "А": 0,
+        "Т": 1,
+        "#": 2,
+    ]
+
     let iconStop = UIImage(named: "stop")!
     let iconStopStart = UIImage(named: "stop_start_bus")!
     let iconStopSelected = UIImage(named: "stop_selected")!
@@ -76,6 +82,9 @@ class MapStore {
     var vehicleMarkerMapToId = [GMSMarker: Int64]()
 
     var scoreboard: Scoreboard?
+
+    var routeTrackA: GMSPolyline?
+    var routeTrackB: GMSPolyline?
 
     func selectStopIcon(stop: Stop) -> UIImage {
         if stop.bearing == -1 {
@@ -306,6 +315,56 @@ class MapStore {
 
         self.stopMarkers[(self.scoreboard?.StopId)!]?.marker?.snippet = dateString
         scoreboardTableView!.reloadData()
+    }
+
+    func showRoute(stopRoute: StopRoute) {
+
+        let vehicleType = mapVehicleType[stopRoute.VehicleType!]!
+
+        if let route = MainDB.instance.getRouteByParam(vehicleTypeValue: vehicleType, numberValue: stopRoute.Number!) {
+
+            let pathAColors = [
+                UIColor(red: 0.12, green: 0.48, blue: 0.96, alpha: 0.7),
+                UIColor(red: 0.13, green: 0.96, blue: 0.36, alpha: 0.7),
+                UIColor(red: 0.60, green: 0.13, blue: 0.96, alpha: 0.7)
+            ]
+
+
+            let pathBColors = [
+                UIColor(red: 0.96, green: 0.29, blue: 0.12, alpha: 0.7),
+                UIColor(red: 0.96, green: 0.84, blue: 0.13, alpha: 0.7),
+                UIColor(red: 0.92, green: 0.53, blue: 0.27, alpha: 0.7)
+            ]
+
+            self.routeTrackA?.map = nil
+            self.routeTrackB?.map = nil
+
+            var path = GMSMutablePath()
+
+            for point in MainDB.instance.getPointsForRoute(route: route, trackTypeValue: 0) {
+                path.add(CLLocationCoordinate2D(latitude: point.latitude!, longitude: point.longitude!))
+            }
+
+            self.routeTrackA = GMSPolyline(path: path)
+
+            self.routeTrackA?.map = self.mapView
+            self.routeTrackA?.strokeWidth = 5
+
+            self.routeTrackA?.strokeColor = pathAColors[vehicleType]
+
+            path = GMSMutablePath()
+
+            for point in MainDB.instance.getPointsForRoute(route: route, trackTypeValue: 1) {
+                path.add(CLLocationCoordinate2D(latitude: point.latitude!, longitude: point.longitude!))
+            }
+
+            self.routeTrackB = GMSPolyline(path: path)
+
+            self.routeTrackB?.map = self.mapView
+            self.routeTrackB?.strokeWidth = 5
+
+            self.routeTrackB?.strokeColor = pathBColors[vehicleType]
+        }
     }
 
     private func parseDate(input: String) -> Int {
