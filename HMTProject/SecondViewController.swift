@@ -13,11 +13,15 @@ import UIKit
 class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
 
+    var stops: [Stop]?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+
+        stops = MainDB.instance.getStops()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,14 +30,29 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if stops != nil {
+            return stops!.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableRow", for: indexPath)
+        let stop = stops?[indexPath.row]
 
-        
+        cell.textLabel?.text = stop?.name
+        if stop != nil {
+            cell.detailTextLabel?.text = ((stop!.trolleybusType!) ? " A " : "") + (stop!.trolleybusType! ? " Tr " : "") + (stop!.tramType! ? " T " : "")
+        }
+
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let stop = stops?[indexPath.row] {
+            MapStore.instance.navigateToStop = stop.id
+            self.tabBarController?.selectedIndex = 0
+        }
     }
 
 

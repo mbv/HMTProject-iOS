@@ -46,6 +46,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         MapStore.instance.loadStops()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MapStore.instance.tryNavigateToStop()
+    }
+
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        
 //        let location = locations.last

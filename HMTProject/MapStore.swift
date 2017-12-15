@@ -86,6 +86,8 @@ class MapStore {
     var routeTrackA: GMSPolyline?
     var routeTrackB: GMSPolyline?
 
+    var navigateToStop: Int64?
+
     func selectStopIcon(stop: Stop) -> UIImage {
         if stop.bearing == -1 {
             return iconStopStart
@@ -142,6 +144,19 @@ class MapStore {
 
             stopMarkers[stop.id!] = tmpMarker
             stopMarkerMapToStopId[tmpGMSMarker] = stop.id!
+        }
+    }
+
+    func tryNavigateToStop() {
+        if self.navigateToStop != nil {
+            let stop = stopMarkers[self.navigateToStop!]
+            if stop != nil {
+                let camera = GMSCameraPosition.camera(withLatitude: (stop!.stopModel.latitude)!, longitude: (stop!.stopModel.longitude)!, zoom: 17.0)
+
+                self.mapView?.animate(to: camera)
+                self.mapView?.selectedMarker = stop!.marker
+                selectStopMarker(marker: stop!.marker!)
+            }
         }
     }
 
