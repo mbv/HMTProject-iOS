@@ -230,6 +230,9 @@ class MapStore {
             if let vehicle = self.vehicleMarkers[vehicleId] {
                 vehicle.marker?.position.latitude = subJson["Latitude"].double!
                 vehicle.marker?.position.longitude = subJson["Longitude"].double!
+                let tripType = subJson["TripType"].int
+
+                vehicle.marker?.icon = getIconForVehicle(vehicleType: route.vehicleType!, tripType: tripType!, number: route.number!)
             } else {
                 var tmp = Vehicle()
                 tmp.id = subJson["Id"].int64
@@ -244,34 +247,8 @@ class MapStore {
                 let position = CLLocationCoordinate2D(latitude: tmp.latitude!, longitude: tmp.longitude!)
                 let tmpGMSMarker = GMSMarker(position: position)
                 //tmpGMSMarker.title = tmp.title
-                var icon: UIImage
 
-                switch tmp.vehicleType! {
-                case 0:
-                    if tmp.tripType == 10 {
-                        icon = self.iconBus
-                    } else {
-                        icon = self.iconBusR
-                    }
-                case 1:
-                    if tmp.tripType == 10 {
-                        icon = self.iconTrolleybus
-                    } else {
-                        icon = self.iconTrolleybusR
-                    }
-                case 2:
-                    if tmp.tripType == 10 {
-                        icon = self.iconTram
-                    } else {
-                        icon = self.iconTramR
-                    }
-                default:
-                    icon = UIImage()
-                }
-
-
-                icon = icon.addText((tmp.number!) as NSString, atPoint: CGPoint(x: 0, y: 8.5), textColor: UIColor.white, textFont: UIFont.boldSystemFont(ofSize: 16), centerX: true)
-                tmpGMSMarker.icon = icon
+                tmpGMSMarker.icon = getIconForVehicle(vehicleType: tmp.vehicleType!, tripType: tmp.tripType!, number: tmp.number!)
                 tmpGMSMarker.groundAnchor = CGPoint(x: 0.5, y: 1)
                 tmpGMSMarker.appearAnimation = GMSMarkerAnimation.pop;
 
@@ -283,6 +260,37 @@ class MapStore {
                 self.vehicleMarkerMapToId[tmpGMSMarker] = tmp.id
             }
         }
+    }
+
+    private func getIconForVehicle(vehicleType: Int, tripType: Int, number: String) -> UIImage {
+        var icon: UIImage
+
+        switch vehicleType {
+        case 0:
+            if tripType == 10 {
+                icon = self.iconBus
+            } else {
+                icon = self.iconBusR
+            }
+        case 1:
+            if tripType == 10 {
+                icon = self.iconTrolleybus
+            } else {
+                icon = self.iconTrolleybusR
+            }
+        case 2:
+            if tripType == 10 {
+                icon = self.iconTram
+            } else {
+                icon = self.iconTramR
+            }
+        default:
+            icon = UIImage()
+        }
+
+
+        icon = icon.addText(number as NSString, atPoint: CGPoint(x: 0, y: 8.5), textColor: UIColor.white, textFont: UIFont.boldSystemFont(ofSize: 16), centerX: true)
+        return icon
     }
 
     func getScoreboardFromJson(json: JSON, stop: Stop) {
