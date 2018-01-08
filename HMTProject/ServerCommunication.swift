@@ -10,7 +10,7 @@ import Alamofire
 class ServerCommunication {
     static let instance = ServerCommunication()
 
-    private let SERVER_URL = "https://hmt.mbv-soft.ru"
+    private let SERVER_URL = "https://hmt.mbvsoft.ru"
     //private let SERVER_URL = "http://localhost:5000"
 
     private var nextRequestId: Int64 = 1;
